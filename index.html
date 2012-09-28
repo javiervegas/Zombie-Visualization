@@ -11,6 +11,7 @@
     <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD6CmjZmmluSLFQnVeDbNHbQGxQfrLRoEo&sensor=true">
     </script>
+    <script type="text/javascript" src="crimes.js"></script>
     <script type="text/javascript">
       function initialize() {
         var mapOptions = {
@@ -18,8 +19,16 @@
           zoom: 12,
           mapTypeId: google.maps.MapTypeId.TERRAIN
         };
-        var map = new google.maps.Map(document.getElementById("map_canvas"),
-            mapOptions);
+        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    for (var i = 0, crime; crime = incidents[i]; ++i) {
+      var lnglat = crime.lnglat;
+      new google.maps.Marker({
+        position: new google.maps.LatLng(lnglat[1], lnglat[0]),
+        flat: true,
+        clickable: false,
+        map: map
+      });
+    }
       }
     </script>
   </head>
