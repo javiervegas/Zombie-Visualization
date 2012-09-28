@@ -50,7 +50,7 @@
         setInterval(function(){
           for (var i = 0, marker; marker = markers[i]; i++) {
             var pos = marker.getPosition();
-            marker.setPosition(new google.maps.LatLng(0.001 + pos.lat(), 0.001+ pos.lng()));
+            marker.setPosition(new google.maps.LatLng(0.001*(0.5-Math.random()) + pos.lat(), 0.001*(0.5-Math.random()) + pos.lng()));
           }
         },1000);
       }
