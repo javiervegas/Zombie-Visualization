@@ -1,1 +1,1 @@
-web: bundle exec ruby web.rb -p 8000
+web: bundle exec ruby web.rb -p $PORT
