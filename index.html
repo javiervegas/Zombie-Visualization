@@ -17,10 +17,11 @@
       function initialize() {
         var mapOptions = {
           center: new google.maps.LatLng(37.8, -122.4),
-          zoom: 14,
+          zoom: 11,
           mapTypeId: google.maps.MapTypeId.TERRAIN
         };
         var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        var marker;
     var goldStar = {
   path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
   fillColor: "yellow",
@@ -30,18 +31,27 @@
   strokeWeight: 14
 };
     var red = 'rgba(255, 0, 0, .3)';
-    var dotter = new Dotter(4);
+    var yellow = 'rgba(255, 255, 60, .3)';
+    var green = 'rgba(60, 255, 60, .3)';
+    var colors = [red, yellow, green];
+    var dotter = new Dotter(3);
+    var markers = new Array();
     for (var i = 0, crime; crime = incidents[i]; ++i) {
       var lnglat = crime.lnglat;
-      new google.maps.Marker({
+        markers[i] = new google.maps.Marker({
         position: new google.maps.LatLng(lnglat[1], lnglat[0]),
         //icon: goldStar,
         icon: dotter.getDot(red),
         flat: true,
-        clickable: false,
+        //clickable: false,
         map: map
       });
     }
+    setInterval(function(){
+      for (var i = 0, marker; marker = markers[i]; i++) {
+        marker.setIcon(dotter.getDot(green));
+      }
+},1000);
       }
     </script>
   </head>
