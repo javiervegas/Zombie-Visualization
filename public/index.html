@@ -11,37 +11,22 @@
     <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD6CmjZmmluSLFQnVeDbNHbQGxQfrLRoEo&sensor=true">
     </script>
-    <script type="text/javascript" src="dotter.js"></script>
     <script type="text/javascript" src="crimes.js"></script>
     <script type="text/javascript">
       function initialize() {
         var mapOptions = {
-          center: new google.maps.LatLng(37.8, -122.4),
+          center: new google.maps.LatLng(37.806, -122.446),
           zoom: 13,
           mapTypeId: google.maps.MapTypeId.TERRAIN
         };
         var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
         var marker;
-        var goldStar = {
-          path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
-          fillColor: "yellow",
-          fillOpacity: 0.8,
-          scale: 1,
-          strokeColor: "gold",
-          strokeWeight: 14
-        };
-        var red = 'rgba(255, 0, 0, .3)';
-        var yellow = 'rgba(255, 255, 60, .3)';
-        var green = 'rgba(60, 255, 60, .3)';
-        var colors = [red, yellow, green];
-        var dotter = new Dotter(3);
         var markers = new Array();
         for (var i = 0, crime; crime = incidents[i]; ++i) {
           var lnglat = crime.lnglat;
           markers[i] = new google.maps.Marker({
             position: new google.maps.LatLng(lnglat[1], lnglat[0]),
-            //icon: goldStar,
-            icon: dotter.getDot(red),
+            icon: "zombie.svg",
             flat: true,
             //clickable: false,
             map: map
@@ -50,9 +35,9 @@
         setInterval(function(){
           for (var i = 0, marker; marker = markers[i]; i++) {
             var pos = marker.getPosition();
-            marker.setPosition(new google.maps.LatLng(0.001*(0.5-Math.random()) + pos.lat(), 0.001*(0.5-Math.random()) + pos.lng()));
+            marker.setPosition(new google.maps.LatLng(0.0005*(0.5-Math.random()) + pos.lat(), 0.001*(0.5-Math.random()) + pos.lng()));
           }
-        },1000);
+        },100);
       }
     </script>
   </head>
