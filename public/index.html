@@ -44,7 +44,7 @@
           for (var i = 0, marker; marker = markers[i]; i++) {
             var pos = marker.getPosition();
             marker.setPosition(new google.maps.LatLng(0.0005*(0.5-Math.random()) + pos.lat(), 0.001*(0.5-Math.random()) + pos.lng()));
-        document.getElementById('time').innerHTML = new Date();
+        document.getElementById('time').innerHTML = (new Date()).toUTCString().replace (/.*[a-z]+\s+\d+\s+/g, "");
           }
         },1000);
         var legend = document.getElementById('legend');
@@ -56,7 +56,7 @@
     </script>
   </head>
   <body onload="initialize()">
-    <div id="header"><div>Zombie DEFCON 1 <span id="time"></span></div></div>
+    <div id="header"><div>Zombie Outbreak - DEFCON 2 - <span id="time"></span></div></div>
     <div id="legend"></div>
     <div id="map"></div>
   </body>
