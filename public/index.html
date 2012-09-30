@@ -34,7 +34,7 @@
           var lnglat = crime.lnglat;
           markers[i] = new google.maps.Marker({
             position: new google.maps.LatLng(lnglat[1], lnglat[0]),
-            icon: "zombie.svg",
+            icon: icon(crime.type),
             flat: true,
             //clickable: false,
             map: map
@@ -49,9 +49,12 @@
         },1000);
         var legend = document.getElementById('legend');
         var legendHTML = [];
-        legendHTML.push('<div>Zombies</div>');
-        legendHTML.push('<div>Humans</div>');
+        legendHTML.push('<div><img src="zombie.svg">Zombies</div>');
+        legendHTML.push('<div><img src="human.svg">Humans</div>');
         legend.innerHTML = legendHTML.join(''); 
+      }
+      function icon(type) {
+        return (type == 'THEFT') ? "human.svg" : "zombie.svg";
       }
     </script>
   </head>
