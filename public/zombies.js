@@ -5,14 +5,17 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.TERRAIN
   });
   var markers = new Array();
+  var crossers = new Array();
   for (var i = 0, crime; crime = incidents[i]; ++i) {
     var lnglat = crime.lnglat;
     markers[i] = marker(lnglat[1], lnglat[0], crime.type, map);
   }
-  var crossers = [marker(bridge[0][0], bridge[0][1], "human", map), marker(bridge[0][0], bridge[0][1], "zombi", map)];
+  for (var i = 0; i < 2; i++) {
+    crossers[i] = marker(bridge[0][0], bridge[0][1], "human", map);
+  }
   var counter = 0;
   setInterval(function(){
-    counter = (counter+1) % 10; 
+    counter = (counter+1) % 20; 
     for (var i = 0, marker; marker = markers[i]; i++) {
       var pos = marker.getPosition();
       marker.setPosition(new google.maps.LatLng(0.0005*(0.5-Math.random()) + pos.lat(), 0.001*(0.5-Math.random()) + pos.lng()));
@@ -41,10 +44,14 @@ function marker(lat, long, type, map) {
   });
 }
 function move(index, latlong, counter) {
-  if (counter <= 10 || index ==1 ) { 
+  if (counter <= 10) { 
     return bridge[0][latlong]+counter*(bridge[1][latlong]-bridge[0][latlong])/10;
+  } else if (index == 0) {
+    return bridge[1][latlong]+(10-counter)*(bridge[1][latlong]-bridge[0][latlong])/10;
+  } else if (latlong == 0) {
+    return bridge[1][latlong]-(10-counter)*0.0005;
   } else {
-    return bridge[0][latlong]+counter*(bridge[0][latlong]-bridge[1][latlong])/10;
+    return bridge[1][latlong]+(10-counter)*0.001;
   }
 }
 bridge=[[37.81096,-122.47754],[37.82578,-122.47922]]
