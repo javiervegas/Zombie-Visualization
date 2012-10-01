@@ -1,4 +1,6 @@
+var bridge=[[37.81066,-122.47754],[37.82578,-122.47922]];
 function initialize() {
+  var parks=[[[37.8064,-122.4797],[37.7887,-122.4472]],[[37.841,-122.5350],[37.8266,-122.4798]]];
   var map = new google.maps.Map(document.getElementById("map"), {
     center: new google.maps.LatLng(37.806, -122.446),
     zoom: 13,
@@ -8,10 +10,15 @@ function initialize() {
   var crossers = new Array();
   for (var i = 0, crime; crime = incidents[i]; ++i) {
     var lnglat = crime.lnglat;
-    markers[i] = marker(lnglat[1], lnglat[0], crime.type, map);
+    markers.push(marker(lnglat[1], lnglat[0], crime.type, map));
+  }
+  for (var i = 0, park; park = parks[i]; ++i) {
+    for (var j = 0; j < 100; j++) {
+      markers.push(marker(park[0][0]+Math.random()*(park[1][0]-park[0][0]), park[0][1]+Math.random()*(park[1][1]-park[0][1]), "human", map));
+    }
   }
   for (var i = 0; i < 2; i++) {
-    crossers[i] = marker(bridge[0][0], bridge[0][1], "human", map);
+    crossers.push(marker(bridge[0][0], bridge[0][1], "human", map));
   }
   var counter = 0;
   setInterval(function(){
@@ -32,7 +39,7 @@ function initialize() {
   legend.innerHTML = legendHTML.join(''); 
 }
 function icon(type) {
-  return (type == 'human' || type =='THEFT') ? "human.svg" : "zombie.svg";
+  return (type == 'human' || type =='VANDALISM') ? "human.svg" : "zombie.svg";
 }
 function marker(lat, long, type, map) {
   return new google.maps.Marker({
@@ -45,13 +52,16 @@ function marker(lat, long, type, map) {
 }
 function move(index, latlong, counter) {
   if (counter <= 10) { 
-    return bridge[0][latlong]+counter*(bridge[1][latlong]-bridge[0][latlong])/10;
+    //north together
+    return bridge[0][latlong]-index*0.0005+counter*(bridge[1][latlong]-bridge[0][latlong])/10;
   } else if (index == 0) {
+    //return back south
     return bridge[1][latlong]+(10-counter)*(bridge[1][latlong]-bridge[0][latlong])/10;
   } else if (latlong == 0) {
+    //keep going north
     return bridge[1][latlong]-(10-counter)*0.0005;
   } else {
+    //keep going west
     return bridge[1][latlong]+(10-counter)*0.001;
   }
 }
-bridge=[[37.81096,-122.47754],[37.82578,-122.47922]]
