@@ -4,6 +4,8 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById("map"), {
     center: new google.maps.LatLng(37.806, -122.446),
     zoom: 13,
+    mapTypeControl: false,
+    streetViewControl: false,
     mapTypeId: google.maps.MapTypeId.TERRAIN
   });
   var markers = new Array();
