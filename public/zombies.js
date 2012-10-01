@@ -9,7 +9,7 @@ function initialize() {
     var lnglat = crime.lnglat;
     markers[i] = marker(lnglat[1], lnglat[0], crime.type, map);
   }
-  var crossers = [marker(bridge[0][0], bridge[0][1], "human", map), marker(bridge[0][0], bridge[0][1], "human", map)];
+  var crossers = [marker(bridge[0][0], bridge[0][1], "human", map), marker(bridge[0][0], bridge[0][1], "zombi", map)];
   var counter = 0;
   setInterval(function(){
     counter = (counter+1) % 10; 
