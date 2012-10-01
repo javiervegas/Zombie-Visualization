@@ -21,42 +21,8 @@
     <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD6CmjZmmluSLFQnVeDbNHbQGxQfrLRoEo&sensor=true">
     </script>
+    <script type="text/javascript" src="zombies.js"></script>
     <script type="text/javascript" src="crimes.js"></script>
-    <script type="text/javascript">
-      function initialize() {
-        var map = new google.maps.Map(document.getElementById("map"), {
-          center: new google.maps.LatLng(37.806, -122.446),
-          zoom: 13,
-          mapTypeId: google.maps.MapTypeId.TERRAIN
-        });
-        var markers = new Array();
-        for (var i = 0, crime; crime = incidents[i]; ++i) {
-          var lnglat = crime.lnglat;
-          markers[i] = new google.maps.Marker({
-            position: new google.maps.LatLng(lnglat[1], lnglat[0]),
-            icon: icon(crime.type),
-            flat: true,
-            //clickable: false,
-            map: map
-          });
-        }
-        setInterval(function(){
-          for (var i = 0, marker; marker = markers[i]; i++) {
-            var pos = marker.getPosition();
-            marker.setPosition(new google.maps.LatLng(0.0005*(0.5-Math.random()) + pos.lat(), 0.001*(0.5-Math.random()) + pos.lng()));
-        document.getElementById('time').innerHTML = (new Date()).toUTCString().replace (/.*[a-z]+\s+\d+\s+/g, "");
-          }
-        },1000);
-        var legend = document.getElementById('legend');
-        var legendHTML = [];
-        legendHTML.push('<div><img src="zombie.svg">Zombies</div>');
-        legendHTML.push('<div><img src="human.svg">Humans</div>');
-        legend.innerHTML = legendHTML.join(''); 
-      }
-      function icon(type) {
-        return (type == 'THEFT') ? "human.svg" : "zombie.svg";
-      }
-    </script>
   </head>
   <body onload="initialize()">
     <div id="header"><div>Zombie Outbreak - DEFCON 2 - <span id="time"></span></div></div>
